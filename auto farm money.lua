@@ -18,7 +18,7 @@ Frame.Parent = ScreenGui
 TitleLabel.Size = UDim2.new(1, 0, 0.2, 0)
 TitleLabel.Position = UDim2.new(0, 0, 0, 0)
 TitleLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-TitleLabel.Text = "Dead Rails"
+TitleLabel.Text = "Gang up on people simulator"
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.TextScaled = true
 TitleLabel.Parent = Frame
@@ -46,7 +46,7 @@ local function toggleFarm()
     getgenv().lol = farmingActive
 
     if farmingActive then
-        MainButton.Text = "Авто фарм отключить!"
+        MainButton.Text = "Авто фарм отключить"
         task.spawn(function()
             while farmingActive do
                 wait()
@@ -58,7 +58,7 @@ local function toggleFarm()
             end
         end)
     else
-        MainButton.Text = "Авто фарм включить!"
+        MainButton.Text = "Авто фарм"
     end
 end
 
