@@ -33,18 +33,15 @@ button.TextColor3 = Color3.fromRGB(255, 255, 255)
 button.Font = Enum.Font.SourceSans
 button.TextSize = 20
 
--- Переменная для отслеживания состояния автофарма
 local farmingEnabled = false
 getgenv().lol = false
 
--- Функция для переключения автофарма
 local function toggleAutoFarm()
     farmingEnabled = not farmingEnabled
     getgenv().lol = farmingEnabled
 
     if farmingEnabled then
         button.Text = "Auto Farm Enabled!"
-        -- Включение автофарма
         task.spawn(function()
             while getgenv().lol do
                 wait()
@@ -62,7 +59,6 @@ local function toggleAutoFarm()
     end
 end
 
--- Обработчик нажатия на кнопку
 button.MouseButton1Click:Connect(toggleAutoFarm)
 
 local footer = Instance.new("TextLabel")
