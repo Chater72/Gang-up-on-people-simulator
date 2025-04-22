@@ -1,70 +1,78 @@
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local TitleLabel = Instance.new("TextLabel")
-local MainButton = Instance.new("TextButton")
-local FooterLabel = Instance.new("TextLabel")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-Frame.Size = UDim2.new(0, 300, 0, 300)
-Frame.Position = UDim2.new(0.5, -150, 0.5, -150)
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Frame.BorderSizePixel = 2
-Frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
-Frame.BackgroundTransparency = 0.2
-Frame.Style = Enum.FrameStyle.RobloxRound
-Frame.Draggable = true
-Frame.Active = true
-Frame.Parent = ScreenGui
+local mainFrame = Instance.new("Frame")
+mainFrame.Parent = screenGui
+mainFrame.Size = UDim2.new(0, 300, 0, 150)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
 
-TitleLabel.Size = UDim2.new(1, 0, 0.2, 0)
-TitleLabel.Position = UDim2.new(0, 0, 0, 0)
-TitleLabel.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-TitleLabel.Text = "Gang up on people simulator"
-TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleLabel.TextScaled = true
-TitleLabel.Parent = Frame
+mainFrame.Active = true
+mainFrame.Draggable = true
 
-MainButton.Size = UDim2.new(0.5, 0, 0.4, 0)
-MainButton.Position = UDim2.new(0.25, 0, 0.3, 0)
-MainButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
-MainButton.Text = "Авто фарм"
-MainButton.TextScaled = true
-MainButton.Parent = Frame
+local title = Instance.new("TextLabel")
+title.Parent = mainFrame
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+title.BorderSizePixel = 0
+title.Text = "Gang up on people simulator"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 24
 
-FooterLabel.Size = UDim2.new(1, 0, 0.1, 0)
-FooterLabel.Position = UDim2.new(0, 0, 0.8, 0)
-FooterLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-FooterLabel.Text = "by: @tolik_scripter in tg"
-FooterLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-FooterLabel.TextScaled = true
-FooterLabel.Parent = Frame
+local button = Instance.new("TextButton")
+button.Parent = mainFrame
+button.Size = UDim2.new(1, 0, 0, 50)
+button.Position = UDim2.new(0, 0, 0, 50)
+button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+button.BorderSizePixel = 0
+button.Text = "Auto Farm!"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.SourceSans
+button.TextSize = 20
 
-local farmingActive = false -- Переменная для отслеживания состояния автофарма
+-- Переменная для отслеживания состояния автофарма
+local farmingEnabled = false
+getgenv().lol = false
 
--- Функция для переключения состояния автофарма
-local function toggleFarm()
-    farmingActive = not farmingActive
-    getgenv().lol = farmingActive
+-- Функция для переключения автофарма
+local function toggleAutoFarm()
+    farmingEnabled = not farmingEnabled
+    getgenv().lol = farmingEnabled
 
-    if farmingActive then
-        MainButton.Text = "Авто фарм отключить"
+    if farmingEnabled then
+        button.Text = "Auto Farm Enabled!"
+        -- Включение автофарма
         task.spawn(function()
-            while farmingActive do
+            while getgenv().lol do
                 wait()
-                for _, v in pairs(workspace.Particles:WaitForChild("Money"):GetChildren()) do
+                for i, v in pairs(workspace.Particles:WaitForChild("Money"):GetChildren()) do
                     if v.Name == "Bundle" then
-                        game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = v.CFrame
+                        game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = v.CFrame
                     end
                 end
             end
         end)
     else
-        MainButton.Text = "Авто фарм"
+        button.Text = "Auto Farm Offed!"
+        wait(2)
+		button.Text = "Auto Farm!"
     end
 end
 
 -- Обработчик нажатия на кнопку
-MainButton.MouseButton1Click:Connect(function()
-    toggleFarm() -- Переключаем состояние автофарма при нажатии на кнопку
-end)
+button.MouseButton1Click:Connect(toggleAutoFarm)
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local footer = Instance.new("TextLabel")
+footer.Parent = mainFrame
+footer.Size = UDim2.new(1, 0, 0, 50)
+footer.Position = UDim2.new(0, 0, 0, 100)
+footer.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+footer.BorderSizePixel = 0
+footer.Text = "t.me/tolik_scripter"
+footer.TextColor3 = Color3.fromRGB(255, 255, 255)
+footer.Font = Enum.Font.SourceSans
+footer.TextSize = 16
+footer.TextTransparency = 0.5
